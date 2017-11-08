@@ -193,7 +193,7 @@ Additionally in a gimbal the optical axis should be aligned with the axis of rot
 # The support : 
 This can vary quite a lot.
 The wider the base the more stability. At a minimum the base should be longer than the arm so that there is no overhang. 
-LINN was 2 meter height and a cross of 2 meter and 2 times 1 meter. I mounted the ramps board in its board on the pole, added the power supply on top so that air flows secured in place by cable, tape and an equerre5
+LINN was 2 meter height and a cross of 2 meter and 2 times 1 meter. I mounted the ramps board in its box on the pole, added the power supply on top so that air flows secured in place by cable, tape and an equerre5
 Without water bottle counter weight When pushed its tendency was rather to slide away rather than tilting.
 Doubling the aluminum profile can increase rigidity a lot.
 
