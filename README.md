@@ -12,7 +12,7 @@ This project was realized in two weeks for the wedding of Thi-Kim & Pierre where
 
 Without them this project would never have existed. You can contribute to their wedding gift here : Donate Paypal or Stripe or BTC
 
-You can donate to Gist Noesis on our main site. You can also use the following affiliate link and buy our recommended products to help us improve the photobooth and develop our company. 
+You can donate to <a href="https://gistnoesis.net/">Gist Noesis</a> on our <a href="https://gistnoesis.net/"> main site </a>. You can also use the following affiliate link and buy our recommended products to help us improve the photobooth and develop our company. 
 
 You can also help us grow by Starring our repository, sharing it on social media, or even better by building your own Linn.
 
