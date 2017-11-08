@@ -154,6 +154,7 @@ Currently we can't switch easily between both modes (i.e. displaying portraits w
 
 
 # Instructions to build the 2-axis DIY gimbal (I'll make a video if the project receive enough attention) :
+The 2020 aluminum profiles are 4x 15cm, 1x 10cm, 1x 40cm these dimensions can probably adjusted or varied and if proper balance is taken care of it will be OK.
 
 All parts must be printed 100% infill.
 
