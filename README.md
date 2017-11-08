@@ -86,6 +86,7 @@ Although this was only a 2-week project, I took care of a lot of small details w
 - Processing in the background when inactive all the different styles so that they are all computed.
 - Delete with confirmation (not a real delete but a move to deleted picture folder so people can erase picture either for private pictures)
 - Reset button of the RAMPS pressable at any time without crashing the software if necessary
+- The program can be stopped by pressing "q" and when it restarts it recompute missing styles so you can add new styles and have a consistent art database
 - You can use v4l2-ctl to manually adjust some additional camera settings, like auto focus, gain, auto exposure, sharpness, backlight compensation, zoom (if you opt for the Brio), 
 - The positionning of the TV with respect to the camera. As people will natually look toward the TV, you should take care that the angle between TV and camera give some good photos.
 - Lighting : avoid as much as possible light behind the guests, eventually use additional light panel if you have extra money.
