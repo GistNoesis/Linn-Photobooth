@@ -206,7 +206,7 @@ You should construct your cable system so you can adjust the height of the robot
 
 
 # Not yet included features : 
--Video : you can probably do it in a few lines using the unassigned "circle" button (recording while the button is pressed) and save frame like it's done for extra frames), remember to display message indicating that it's currently recording and to handle the case where controller is deconnected. Getting the audio and encoding and synchronisation will be more complex.
+-Video : you can probably do it in a few lines using the unassigned "circle" button (recording while the button is pressed) and save frame like it's done for extra frames), remember to display message indicating that it's currently recording and to handle the case where controller is disconnected. Getting the audio and encoding and synchronisation will be more complex.
 -Serving the photos and art to a webserver where you could vote for the best pictures or style
 -Serving the photos live to twitter
 
