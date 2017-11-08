@@ -8,7 +8,7 @@ A photobooth is a setup where guests take pictures of themselves.
 LINN is a 2-axis gimbal controlled by a bluetooth ps3-controller which then stylize your photos with some deep neural style transter and offer single button instant print experience.
 
 
-This project was realized in two weeks for the wedding of Thi-Kim & Pierre where it was a great success.
+This project was realized in two weeks for the wedding of Thi-Kim & Pierre where it was a great success (lot of fun and interest, ~300 pictures taken, 6000 art generated, ~100 prints but we ran out of paper).
 
 Without them this project would never have existed. You can contribute to their wedding gift here : Donate Paypal or Stripe or BTC
 
@@ -66,7 +66,7 @@ If you have a good internet connectivity you don't need a PC with GPUs as the sc
 - The TV can be substituted by some video projector like <a target="_blank" href="https://www.amazon.fr/Philips-PPX3417W-Vid%C3%A9oprojecteur-DLP-Noir/dp/B01DY5QXLC?&_encoding=UTF8&tag=gistnoesis04-21&linkCode=ur2&linkId=131b704cf7c6a24ea822376a7f38a7fb&camp=1642&creative=6746">PicoPix video projector</a><img src="//ir-fr.amazon-adsystem.com/e/ir?t=gistnoesis04-21&l=ur2&o=8" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> if you have a good control of the lighting conditions (people should be in the light but video projected image should be in the dark and are ready to sacrifice some display quality for ease of transportation.
 - The 2-axis DIY Gimbal can be substituted either with the small tripod which come with the C922 or with an aluminium pole and some 3d printed pole adapter parts. (change UseDummySerial to True in code if you don't use RAMPS)
 - The PS3 controller can be substituted by a bluetooth keyboard.
-- The printer is not necessary, as print requests are saved to a file. 
+- The printer is not necessary, as print requests are saved to a file. You probably can use <a target="_blank" href="https://www.amazon.fr/Canon-0599C002-Selphy-CP1200-Noir/dp/B01AAVMJHU/?&_encoding=UTF8&tag=gistnoesis04-21&linkCode=ur2&linkId=0331a286b37d33c87a31625ba6b55d25&camp=1642&creative=6746">Selphy CP1200</a><img src="//ir-fr.amazon-adsystem.com/e/ir?t=gistnoesis04-21&l=ur2&o=8" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> as a replacement for the old CP800 or any other printer. Just check they are linux compatible (gutemberg). Buy compatible ink+paper combo in advance.
 
 
 # The attention to detail :
@@ -93,7 +93,7 @@ Currently we can't switch easily between both modes (i.e. displaying portraits w
 - The photos were saved on the HDD the art was processed on the SSD, so I've always had 2 copies of the pictures to prevent data loss (If you have internet access you can rsync your folder to a remote directory or cloud drive)
 - Using the power supply fans to assure the air flow over the ramp board.
 - Easily adjustable cable tension by sliding brackets and weights.
-- We customized the neural styles by training our own styles. (~3 hours per style 
+- We customized the neural styles by training our own styles. (~3 hours to train a style)
 
 # Making it fun : 
 - We had some background picture frames where people can put their heads through, it induced a lot of funny but lower quality pictures.
