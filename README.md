@@ -201,7 +201,7 @@ It's time for you to reveal your inner spider.
 I didn't have to cut my rope at all.
 Use equerre5 (again printed in 2cm height direction) to thread some cables to increase the rigidity of the structure. You can slide them to increase the tension. The aluminium profile should bend.
 Then when you will add some counter weight on the extremities to reduce the bending it will increase the tension even more. If you have a musical hear you can even tune them in harmony.
-If these sort of designs interest you, you will probably be interested by the tensegrity concept. 
+If these sort of designs interest you, you will probably be interested by the tensegrity concept (which we are not an instance of). 
 You should construct your cable system so you can adjust the height of the robot arm quite easily and then you can easily tense the cable again by sliding some equerre5. The long support cross helped in this regard.
 
 
