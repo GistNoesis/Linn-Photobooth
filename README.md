@@ -181,7 +181,7 @@ You can then print without support the supportstepper and piniongear (remember t
 
 
 # The secrets of robot arms : Proper balance
-The center of mass of a rotating part should be as near as possible to the axis of rotation. You can use extra bearing with 10mm t-slot nuts and screw to balance the arm.
+The center of mass of a rotating part should be as near as possible to the axis of rotation. You can use extra bearing with 10mm t-slot nuts and screw to balance the arm. (Remember to balance with the camera in position and orientation)
 If you equilibrate properly it shouldn't rotate in either direction due to its own weight. This means that even when you have no power the arm shouldn't move.
 Start by equilibring the axis which support the camera, then when it's well balance move to the next axis. You can add a lot of axis and everything will be balanced.
 When the arm is well balanced you don't need a lot of force to move it and vibrations will be minimal.
