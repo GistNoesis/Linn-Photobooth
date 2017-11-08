@@ -26,10 +26,10 @@ Here is the full setup which went live :
 Picture of the full setup
 
 The user experience is intended streamlined : the users put themselves with accessories in the frame of the camera, they see themselves on the TV so they can see what the photo looks like,
- then press X on the controller and it takes a photo instantly displayed. Then he either press Select two times to print the original pictures and 30 secs later he has the printed photo.
-Alternatively he can use L2/R2 to change the art style, wait less than 6 secs then press Start two times to print the art picture. 
-He can also press "Square" to have the photo taken in 5 secs (enough to hide the ps3 controller).
-He can also use L1/R1 to see previous/next pictures.
+ then press X on the controller and it takes a photo instantly displayed. Then they either press Select two times to print the original pictures and 30 secs later they have the printed photo.
+Alternatively they can use L2/R2 to change the art style, wait less than 6 secs then press Start two times to print the art picture. 
+They can also press "Square" to have the photo taken in 5 secs (enough to hide the ps3 controller).
+They can also use L1/R1 to see previous/next pictures.
 They can also use the analogic joystick to move the camera.
 If you enable manual auto exposure using v4l2-ctl -d /dev/video0 -c auto_exposure=1 then the up and down arrows will adjust exposure time. (Remember you can also adjust Gain usin v4l2-ctl to play on ISO sensitivity)
 
