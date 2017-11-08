@@ -62,7 +62,7 @@ If you enable manual auto exposure using v4l2-ctl -d /dev/video0 -c auto_exposur
 If you have a good internet connectivity you don't need a PC with GPUs as the scripts are customizable to dispatch jobs over ssh to process the art. 
 
 - So you can use a cheaper PC and rent some amazon cloud for the night.
-- The webcam C922 or the older more famous C920 are only full HD, if you have extra money you should probably invest in the 4K resolution logitech Brio on a USB3.0 port (and adapt the code a little to set the resolution to 4K). (I have not tested the linux compatibility). 
+- The webcam C922 or the older more famous C920 are only full HD, if you have extra money you should probably invest in the 4K resolution <a target="_blank" href="https://www.amazon.fr/Logitech-Business-Brio-Conférence-Enregistrement/dp/B01N5NYRES/?&_encoding=UTF8&tag=gistnoesis04-21&linkCode=ur2&linkId=d38f295892f9729b255d6cacbbed4d48&camp=1642&creative=6746">Logitech Brio</a><img src="//ir-fr.amazon-adsystem.com/e/ir?t=gistnoesis04-21&l=ur2&o=8" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> on a USB3.0 port (and adapt the code a little to set the resolution to 4K). (I have not tested the linux compatibility). 
 - The TV can be substituted by some video projector like PicoPix if you have a good control of the lighting conditions and are ready to sacrifice some display quality for ease of transportation.
 - The 2-axis DIY Gimbal can be substituted either with the small tripod which come with the C922 or with an aluminium pole and some 3d printed pole adapter parts. (change UseDummySerial to True in code if you don't use RAMPS)
 - The PS3 controller can be substituted by a bluetooth keyboard.
