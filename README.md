@@ -42,7 +42,7 @@ If you enable manual auto exposure using v4l2-ctl -d /dev/video0 -c auto_exposur
 - Canon Selphy CP800
 - TV Hd-ready (everything was developped for full HD so I had to adapt the ratio quickly when I discovered my grandparents tv was only Hd-ready )
 - <a target="_blank" href="https://www.amazon.fr/Sedatech-PC-GTX1080Ti-CardReader-R%C3%A9solution/dp/B06XJ6431Q/?&_encoding=UTF8&tag=gistnoesis04-21&linkCode=ur2&linkId=8154e7c7ed3d5bf324457401ae4684e0&camp=1642&creative=6746">Sedatech PC Gamer Ultimate Intel i7-7700K 4x 4.20Ghz (max 4.5Ghz), Geforce GTX1080Ti 11Go, 32Gb RAM DDR4 3000Mhz, 3To HDD, 500Go SSD</a><img src="//ir-fr.amazon-adsystem.com/e/ir?t=gistnoesis04-21&l=ur2&o=8" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-- Second Geforce GTX1080Ti 11Go
+- Second <a target="_blank" href="https://www.amazon.fr/MSI-GTX-1080-AERO-11G/dp/B06XT3983Y?&_encoding=UTF8&tag=gistnoesis04-21&linkCode=ur2&linkId=9138fbd6aba9c0d6d4f0b8dd70cb41e6&camp=1642&creative=6746">GTX 1080 Ti</a><img src="//ir-fr.amazon-adsystem.com/e/ir?t=gistnoesis04-21&l=ur2&o=8" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 11Go
 - 2 axis DIY Gimbal (2 nema 17 stepper, RAMPS, PC power supply; ATX Power supply extension cable, 2020 aluminum profiles, ABS 3d printed parts, aluminium brackets, screws and nuts, 608 bearings, dyneema 150kg rope) 
 
 
