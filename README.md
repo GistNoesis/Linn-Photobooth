@@ -10,7 +10,8 @@ LINN is a 2-axis gimbal controlled by a bluetooth ps3-controller which then styl
 
 This project was realized in two weeks for the wedding of Thi-Kim & Pierre where it was a great success (lot of fun and interest generated, ~300 pictures taken, 6000 art pieces created, ~100 prints but we ran out of paper).
 
-Without them this project would never have existed. You can contribute to their wedding gift here : Donate Paypal or BTC
+Without them this project would never have existed. You can contribute to their wedding gift here : Donate via Paypal https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3XTEK2FP9ZW2Q
+ or BTC
 
 You can donate to <a href="https://gistnoesis.net/">Gist Noesis</a> on our <a href="https://gistnoesis.net/"> main site </a>. You can also use the following affiliate link and buy our recommended products to help us improve the photobooth and develop our company. 
 
