@@ -37,7 +37,7 @@ If you enable manual auto exposure using v4l2-ctl -d /dev/video0 -c auto_exposur
 
 # Hardware : 
 - PS3 controller
-- Bluetooth dongle (IT WORKS BT150 is ubuntu16.04 compatible )
+- Bluetooth dongle (<a target="_blank" href="https://www.amazon.fr/Works-BT150-R%C3%A9seau-Adaptateurs-Bluetooth/dp/B00FG2WFE6/?&_encoding=UTF8&tag=gistnoesis04-21&linkCode=ur2&linkId=e14ca79b260e0ab4f313ffe5051e524a&camp=1642&creative=6746">IT WORKS BT150</a><img src="//ir-fr.amazon-adsystem.com/e/ir?t=gistnoesis04-21&l=ur2&o=8" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> is lubuntu16.04 compatible It's overpriced but I bought this model at the FNAC to be sure to get it in time, they are probably some compatible bluetooth dongle for a lot cheaper https://doc.ubuntu-fr.org/bluetooth_materiel-soutenu )
 - <a target="_blank" href="https://www.amazon.fr/Logitech-C922-Pro-Stream-Webcam/dp/B01L6L52K4/?&_encoding=UTF8&tag=gistnoesis04-21&linkCode=ur2&linkId=e5e49a79ed1de0ed566409ecd6949148&camp=1642&creative=6746">Logitech C922</a><img src="//ir-fr.amazon-adsystem.com/e/ir?t=gistnoesis04-21&l=ur2&o=8" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 - Canon Selphy CP800
 - TV Hd-ready (everything was developped for full HD so I had to adapt the ratio quickly when I discovered my grandparents tv was only Hd-ready )
