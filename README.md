@@ -23,7 +23,8 @@ It exists in different variants depending on the budget you want to spend, your 
 
 Here is the full setup which went live :
 
-Picture of the full setup
+![Picture of the full setup](https://raw.githubusercontent.com/GistNoesis/Linn-Photobooth/master/doc/images/IMG_20171105_134613.jpg)
+
 
 The user experience is intended streamlined : the users put themselves with accessories in the frame of the camera, they see themselves on the TV so they can see what the photo looks like,
  then press X on the controller and it takes a photo instantly displayed. Then they either press Select two times to print the original pictures and 30 secs later they have the printed photo.
