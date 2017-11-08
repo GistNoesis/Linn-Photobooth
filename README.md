@@ -1,4 +1,4 @@
-# Linn-Photobooth
+# Linn Photobooth
 I'm currently in the process of uploading the code and setting the links correctly, I'll do a Show HN when it's ready, please refrain from sharing before this thank you. 
 
 LINN is your personal photobooth robot artist. 
