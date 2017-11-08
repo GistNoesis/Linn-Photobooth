@@ -92,7 +92,7 @@ If you have a good internet connectivity you don't need a PC with GPUs as the sc
 # The attention to detail :
 
 Although this was only a 2-week project, I took care of a lot of small details which contributed a lot to the success :
-- Safe (Low 12V voltage), very stable due to large base, well balanced, quite light,  well delimited by cables and water bottle packs so that people don't trip into it or go under overhanging arm, not very strong so it can't harm fingers if people touch it, TV taped to the table so it won't accidently fall.
+- Safe (Low 12V voltage), very stable due to large base, well balanced, quite light,  well delimited by cables and water bottle packs so that people don't trip into it or go under overhanging arm, not very strong so it can't harm fingers if people touch it, can be turned manually and stay in position even without power, TV taped to the table so it won't accidently fall.
 - Cheap and reusable
 - Software end stop for the camera movement, so users can't break the camera or mingle the cables, (even though without the end stop camera collisions are not to severe and are probably fine)
 - Analogic speed variation for the camera movement
