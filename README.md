@@ -65,6 +65,8 @@ close up of one axis of the diy gimbal
 close up of one axis of the diy gimbal other angle
 	![close up of one axis of the diy gimbal yet another angle](/doc/images/2017-11-08-175922.jpg)
 close up of one axis of the diy gimbal yet another angle
+![connecting the green wire to the black wire to enable the power supply](/doc/images/2017-11-08-182828.jpg)
+connecting the green wire to the black wire to enable the power supply
 
 # Software : 
 (I'll add a guide soon to help build the software stack, I'm not sure to be able to build some docker images because of the bluetooth driver, but for the remote art I'll probably do it)
