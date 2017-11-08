@@ -149,13 +149,13 @@ Currently we can't switch easily between both modes (i.e. displaying portraits w
 - It got some people to speak together and explain some commands to each other.
 - The instant printing (for all the times people had troubles with their printers the experience of pressing a button and having the print start instantly is fantastic, the Selphy CP800 doing multiple ink-pass also contribute to the fun of it.
 - The neural art makes some nice unusual visual effects.
-- People discovered on their own how they could get a second examplary for their picture
+- People discovered on their own how they could get a second examplary for their printed photo
 - Overall it was great fun.
 
 
 
 # Instructions to build the 2-axis DIY gimbal (I'll make a video if the project receive enough attention) :
-The 2020 aluminum profiles are 4x 15cm, 1x 10cm, 1x 40cm these dimensions can probably adjusted or varied and if proper balance is taken care of it will be OK.
+The 2020 aluminum profiles are 4x 15cm, 1x 10cm, 1x 40cm these dimensions can probably be adjusted or varied and if proper balance is taken care of it will be OK.
 
 All parts must be printed 100% infill.
 
