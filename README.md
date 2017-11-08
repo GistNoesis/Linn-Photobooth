@@ -48,16 +48,23 @@ If you enable manual auto exposure using v4l2-ctl -d /dev/video0 -c auto_exposur
 <a target="_blank" href="https://www.amazon.fr/LogiLink-CP095-Câble-dalimentation-Schuko-C13/dp/B003Y5IG2W?&_encoding=UTF8&tag=gistnoesis04-21&linkCode=ur2&linkId=aca8e4693b3958e1ad744385ac6ee15e&camp=1642&creative=6746">Power supply cable</a><img src="//ir-fr.amazon-adsystem.com/e/ir?t=gistnoesis04-21&l=ur2&o=8" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> ; <a target="_blank" href="https://www.amazon.fr/StarTech-com-ATXP4EXT-dextension-dalimentation-processeur/dp/B000O7WFHA/?&_encoding=UTF8&tag=gistnoesis04-21&linkCode=ur2&linkId=b3078b1ac41beda32ff8a2c6895b7447&camp=1642&creative=6746">ATX extension cable</a><img src="//ir-fr.amazon-adsystem.com/e/ir?t=gistnoesis04-21&l=ur2&o=8" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />(This cable got damaged during transport and one contact was loose) You can choose longer cables if you don't want to put the power supply near the RAMP board) , 2020 aluminum profiles aluminium brackets screws and nuts (sourced from http://www.systeal.com/fr/ ), ABS 3d printed parts, <a target="_blank" href="https://www.amazon.fr/gp/product/B00EPNN62M/?&_encoding=UTF8&tag=gistnoesis04-21&linkCode=ur2&linkId=78ebd4f31fbf1a81743d9fb8509c9ab3&camp=1642&creative=6746">608 bearings</a><img src="//ir-fr.amazon-adsystem.com/e/ir?t=gistnoesis04-21&l=ur2&o=8" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />  , <a target="_blank" href="https://www.amazon.fr/Spectra-Extreme-tresse-tressé-100-m-2000/dp/B01AYUUGYU?&_encoding=UTF8&tag=gistnoesis04-21&linkCode=ur2&linkId=a2e66e39fd9b59a4e716e9a769da290e&camp=1642&creative=6746">150kg dyneema rope</a><img src="//ir-fr.amazon-adsystem.com/e/ir?t=gistnoesis04-21&l=ur2&o=8" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />) 
 
  ![Packaged : Electronic in one bag, Mechanical parts and tools in the other bag](/doc/images/2017-11-08-174942.jpg)
+ Packaged : Electronic in one bag, Mechanical parts and tools in the other bag
 	![Unpacked : Mechanical parts two versions with and without diy gimbal](/doc/images/2017-11-08-175406.jpg)
+Unpacked : Mechanical parts two versions with and without diy gimbal
 	![Unpacked : Everything except TV, cables and computer](/doc/images/2017-11-08-175601.jpg)
-	![close up of the RAMPS board](/doc/images/2017-11-08-175633.jpg)	
+Unpacked : Everything except TV, cables and computer
+	![close up of the RAMPS board](/doc/images/2017-11-08-175633.jpg)
+close up of the RAMPS board
 	![close up of diy gimbal](/doc/images/2017-11-08-175816.jpg)
+close up of diy gimbal
 	![close up of diy gimbal other angle](/doc/images/2017-11-08-175838.jpg)
+close up of diy gimbal other angle
 	![close up of one axis of the diy gimbal](/doc/images/2017-11-08-175858.jpg)
+close up of one axis of the diy gimbal
 	![close up of one axis of the diy gimbal other angle](/doc/images/2017-11-08-175910.jpg)
+close up of one axis of the diy gimbal other angle
 	![close up of one axis of the diy gimbal yet another angle](/doc/images/2017-11-08-175922.jpg)
-
-
+close up of one axis of the diy gimbal yet another angle
 
 # Software : 
 (I'll add a guide soon to help build the software stack, I'm not sure to be able to build some docker images because of the bluetooth driver, but for the remote art I'll probably do it)
