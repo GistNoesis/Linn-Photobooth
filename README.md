@@ -125,8 +125,8 @@ Currently we can't switch easily between both modes (i.e. displaying portraits w
 - It got some people to speak together and explain some commands to each other.
 - The instant printing (for all the times people had troubles with their printers the experience of pressing a button and having the print start instantly is fantastic, the Selphy CP800 doing multiple ink-pass also contribute to the fun of it.
 - The neural art makes some nice unusual visual effects.
-- People discover on their own how they could get a second examplary for their picture
-- Overall it was fun.
+- People discovered on their own how they could get a second examplary for their picture
+- Overall it was great fun.
 
 
 
