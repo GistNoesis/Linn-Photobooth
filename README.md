@@ -112,7 +112,7 @@ Although this was only a 2-week project, I took care of a lot of small details w
 - You can use v4l2-ctl to manually adjust some additional camera settings, like auto focus, gain, auto exposure, sharpness, backlight compensation, zoom (if you opt for the Brio), 
 - The positionning of the TV with respect to the camera. As people will natually look toward the TV, you should take care that the angle between TV and camera give some good photos.
 - Lighting : avoid as much as possible light behind the guests, eventually use additional light panel if you have extra money.
-- Portrait vs Paysage : Both modes have been implemented. We chose Paysage for the party so that more people could be on the picture. Portrait would be better for single person from shoes to hat pictures. (Orientation 0 90 180 270 in code)
+- Portrait vs Paysage : Both modes have been implemented. We chose Paysage for the party so that more people could be on the picture. Portrait would be better for single person from shoes to hat pictures. (set "ang" to one of 0 90 180 270 in code)
 Currently we can't switch easily between both modes (i.e. displaying portraits while taking Paysage) except by relaunching the program in the other mode
 - The photos were saved on the HDD the art was processed on the SSD, so I've always had 2 copies of the pictures to prevent data loss (If you have internet access you can rsync your folder to a remote directory or cloud drive)
 - Using the power supply fans to assure the air flow over the ramp board.
