@@ -4,7 +4,7 @@ LINN is your personal photobooth robot artist.
 
 A photobooth is a setup where guests take pictures of themselves.
 
-LINN is a 2-axis gimbal controlled by a bluetooth ps3-controller which then stylize your photos with some deep neural style transfert and offer single button instant print experience.
+LINN is a 2-axis gimbal controlled by a bluetooth ps3-controller which then stylize your photos with some deep neural style transfer and offer single button instant print experience.
 
 
 This project was realized in two weeks for the wedding of Thi-Kim & Pierre where it was a great success (lot of fun and interest generated, ~300 pictures taken, ~6000 art pieces created, ~100 prints but we ran out of paper).
