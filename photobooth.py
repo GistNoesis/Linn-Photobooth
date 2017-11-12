@@ -22,7 +22,7 @@ import re
 
 ang = 0
 ratio = 1.0
-useDummySerial = True
+useDummySerial = False
 serialPort = "/dev/ttyUSB0"
 halfpulsemult = 40000.0
 
@@ -658,7 +658,7 @@ def processEvents(frame ,currenttime,ser):
             selectArtPicture( pictureIndex,artIndex)
         elif isinstance(ev,tuple) and ev[0] == "axis0":
             val = ev[1]
-            if abs(val) > 20:
+            if abs(val) > 10:
                 val = int(1.0 / val * halfpulsemult)
             else:
                 val = 0
@@ -669,7 +669,7 @@ def processEvents(frame ,currenttime,ser):
 
         elif isinstance(ev,tuple) and ev[0] == "axis3":
             val = ev[1]
-            if abs(val) > 20:
+            if abs(val) > 10:
                 val = int(1.0 / val * halfpulsemult)
             else:
                 val = 0
@@ -784,6 +784,11 @@ cv2.resizeWindow("doc",frameSize[0],frameSize[1])
 last10Pictures.append( background )
 print(background.shape)
 
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
+
+faceTracking = False
+
 with getSerial() as ser:
     while(True):
         # Capture frame-by-frame
@@ -799,6 +804,36 @@ with getSerial() as ser:
 
         rot = rotate_image_90(frame,ang)
         small = cv2.resize(rot, (0, 0), fx=ratio, fy=ratio)
+
+        if( faceTracking ):
+            gray = cv2.cvtColor(small, cv2.COLOR_BGR2GRAY)
+            faces = face_cascade.detectMultiScale(gray,1.2,5)
+
+            for (x, y, w, h) in faces:
+                cv2.rectangle(small, (x, y), (x + w, y + h), (255, 0, 0), 2)
+                roi_gray = gray[y:y + h, x:x + w]
+                roi_color = small[y:y + h, x:x + w]
+                eyes = eye_cascade.detectMultiScale(roi_gray,1.1,7)
+                for (ex, ey, ew, eh) in eyes:
+                    cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
+                if True:
+                    target=np.array( [small.shape[0]/4.0,small.shape[1]/2.0]) 
+                    center = [y+h/2,x+w/2]
+                    diff = center - target
+                    print(diff)
+                    gamepadevents.put(("axis0", 0.5*diff[0]))
+                    gamepadevents.put(("axis3", 0.5*diff[1]))
+                else:
+                    gamepadevents.put(("axis0", 0.0))
+                    gamepadevents.put(("axis3", 0.0))
+                break
+
+            if( len(faces) == 0):
+                gamepadevents.put(("axis0", 0.0))
+                gamepadevents.put(("axis3", 0.0))
+
+
+
 
         if timer != None:
             dt = timer - datetime.now()
@@ -825,6 +860,11 @@ with getSerial() as ser:
             break
         if key & 0xFF == ord(' '):
             gamepadevents.put("croix down")
+        if key & 0xFF == ord('f'):
+            faceTracking = not faceTracking
+            if faceTracking == False:
+                gamepadevents.put(("axis0", 0.0))
+                gamepadevents.put(("axis3", 0.0))
 
 
 
