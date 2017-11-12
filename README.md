@@ -134,7 +134,7 @@ Currently we can't switch easily between both modes (i.e. displaying portraits w
 - I had to change the ink (very easy on this printer), so not yet fully autonomous, We probably should display a message on screen when ink level are low.
 - Cables didn't have enough tension, so there was a little too much oscillations when moving. (Remember to test in real conditions : (while drunk :) ) )
 - The ATX power supply extension cable got damaged during the transport, and one contact was loose.
-- I had to reset (press the arduino button) once the RAMPS board as one axis of the motor was not responding. (It may also be some software bug about the arduino timer looping around every 72 minutes), or some over heating issue of the driver, I'll have to troubleshoot)
+- I had to reset (press the arduino button) once the RAMPS board as one axis of the motor was not responding. (It was a software bug about the arduino timer looping around every 72 minutes that I've corrected since).
 - The partial documentation caused some people to miss out on the changing of the styles. It was more prevalent among people of the older generations who had never used a PS3 controller and for which the L1/R1 L2/R2 buttons are not natural.
 - The lighting environment could have been improved.
 - The driver makes a little noise which can't be heared during a noisy event but you can improve using TMC2100 stepper driver with 32x microstepping.
