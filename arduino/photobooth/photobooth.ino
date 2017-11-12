@@ -75,8 +75,8 @@ void set(DigitalPin& pin,boolean mode=INPUT,boolean state=false)
 unsigned long time =0;
 
 
-StepperControl XAxis = {X_ENABLE_PIN,X_STEP_PIN,X_DIR_PIN, 0,0,0,0, 1,false,0 , -2700,2700};
-StepperControl YAxis = {Y_ENABLE_PIN,Y_STEP_PIN,Y_DIR_PIN, 0,0,0,0, 1,false,0, -1700,1700};
+StepperControl XAxis = {X_ENABLE_PIN,X_STEP_PIN,X_DIR_PIN, 0,0,0,0, 1,false,0 , -1700,1700};
+StepperControl YAxis = {Y_ENABLE_PIN,Y_STEP_PIN,Y_DIR_PIN, 0,0,0,0, 1,false,0, -2700,2700};
 
 void handleOverflow( StepperControl& axis)
 {
