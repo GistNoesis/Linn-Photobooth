@@ -31,8 +31,9 @@ Alternatively they can use L2/R2 to change the art style, wait less than 6 secs 
 They can also press "Square" to have the photo taken in 5 secs (enough to hide the ps3 controller).
 They can also use L1/R1 to see previous/next pictures.
 They can also use the analogic joystick to move the camera.
-If you enable manual auto exposure using v4l2-ctl -d /dev/video0 -c auto_exposure=1 then the up and down arrows will adjust exposure time. (Remember you can also adjust Gain using v4l2-ctl to play on ISO sensitivity)
+If you enable manual auto exposure using v4l2-ctl -d /dev/video0 -c exposure_auto=1 then the up and down arrows will adjust exposure time. (Remember you can also adjust Gain using v4l2-ctl to play on ISO sensitivity)
 
+[![Demo in video](https://img.youtube.com/vi/Dvh4kFYVPd0/0.jpg)](https://www.youtube.com/watch?v=Dvh4kFYVPd0)
 
 
 # Hardware : 
