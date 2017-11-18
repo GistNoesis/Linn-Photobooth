@@ -34,6 +34,7 @@ They can also use the analogic joystick to move the camera.
 If you enable manual auto exposure using v4l2-ctl -d /dev/video0 -c exposure_auto=1 then the up and down arrows will adjust exposure time. (Remember you can also adjust Gain using v4l2-ctl to play on ISO sensitivity)
 
 [![Demo in video](https://img.youtube.com/vi/Dvh4kFYVPd0/0.jpg)](https://www.youtube.com/watch?v=Dvh4kFYVPd0)
+[![Update with GT2 pulley](https://img.youtube.com/vi/oYx7XjZQiro/0.jpg)](https://www.youtube.com/watch?v=oYx7XjZQiro)
 
 
 # Hardware : 
@@ -90,6 +91,7 @@ If you have a good internet connectivity you don't need a PC with GPUs as the sc
 - The 2-axis DIY Gimbal can be substituted either with the small tripod which come with the C922 or with an aluminium pole and some 3d printed pole adapter parts. (change UseDummySerial to True in code if you don't use RAMPS)
 - The PS3 controller can be substituted by a bluetooth keyboard (currently only space to take a picture is supported).
 - The printer is not necessary, as print requests are saved to a file. You probably can use <a target="_blank" href="https://www.amazon.fr/Canon-0599C002-Selphy-CP1200-Noir/dp/B01AAVMJHU/?&_encoding=UTF8&tag=gistnoesis04-21&linkCode=ur2&linkId=0331a286b37d33c87a31625ba6b55d25&camp=1642&creative=6746">Selphy CP1200</a><img src="//ir-fr.amazon-adsystem.com/e/ir?t=gistnoesis04-21&l=ur2&o=8" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> as a replacement for the old CP800 or any other printer. Just check they are linux compatible (gutemberg). Buy compatible ink+paper combo in advance.
+-Pulleys or gears : pulleys are a lot smoother are there is no more backlash but you need to buy some closed GT2 belt (6mm wide > 300mm length (not too long for the vertical axis) Remember to invert the axis between gears and pulleys if facetracker goes in the wrong direction :) 
 
 
 # The attention to detail :
