@@ -1,19 +1,10 @@
 
 typedef struct  {
   int ENABLE_PIN;
-  int STEP_PIN;
-  int DIR_PIN;
-  
-  unsigned long prevtime;
-  unsigned long lastpulsetime;
-  unsigned long nextpulsetime;
-  unsigned long halfpulse;
-  int dir;
-  bool hasPulsed;
-  long pos ;
   long lowerBound;
   long upperBound;
-} StepperControl;
+  bool speedMode;
+} StepperExtras;
 
 
 // Pins for the RAMPS board
@@ -29,6 +20,14 @@ const int Z_STEP_PIN         = 46;
 const int Z_DIR_PIN          = 48;
 const int Z_ENABLE_PIN       = 62;  // Active LOW
 
+#include <AccelStepper.h>
+
+
+AccelStepper XAxis2( AccelStepper::MotorInterfaceType::DRIVER,X_STEP_PIN,X_DIR_PIN );
+AccelStepper YAxis2( AccelStepper::MotorInterfaceType::DRIVER,Y_STEP_PIN,Y_DIR_PIN );
+
+StepperExtras XAxis = {X_ENABLE_PIN,-1700,1700,true};
+StepperExtras YAxis = {Y_ENABLE_PIN,-3700,3700,true};
 
 void setup() {
    Serial.begin(115200);   
@@ -52,7 +51,11 @@ void setup() {
   digitalWrite( X_DIR_PIN, 1);
   digitalWrite( Y_DIR_PIN, 0 );
 
-
+  XAxis2.setAcceleration(1000.0);
+  YAxis2.setAcceleration(1000.0);
+  
+  XAxis2.setMaxSpeed(20000);
+  YAxis2.setMaxSpeed(20000);
 }
 
 
@@ -72,53 +75,37 @@ void set(DigitalPin& pin,boolean mode=INPUT,boolean state=false)
 
 
 
-unsigned long time =0;
 
 
-StepperControl XAxis = {X_ENABLE_PIN,X_STEP_PIN,X_DIR_PIN, 0,0,0,0, 1,false,0 , -1700,1700};
-StepperControl YAxis = {Y_ENABLE_PIN,Y_STEP_PIN,Y_DIR_PIN, 0,0,0,0, 1,false,0, -2700,2700};
 
-void handleOverflow( StepperControl& axis)
+
+
+
+void pollWithEndStop( AccelStepper& stepper,StepperExtras& extra)
 {
-  //We handle not perfectly the case when time overflows every 70 minutes
-  
-  if(time < axis.prevtime )
+  if( stepper.currentPosition() >= extra.upperBound && stepper.speed() > 0.0 )
   {
-    axis.lastpulsetime = 0;
-    axis.nextpulsetime = 0;
-    axis.prevtime=0;
+    stepper.setSpeed( 0.0 );
+    extra.speedMode=true;
   }
+  if( stepper.currentPosition() <= extra.lowerBound && stepper.speed() < 0.0 )
+  {
+    stepper.setSpeed( 0.0 );
+    extra.speedMode=true;
+  }
+
+  if( extra.speedMode )
+  {
+    stepper.runSpeed();
+  }
+  else
+  {
+    stepper.run();
+  }
+  
 }
 
 
-
-void pulseAtHalfpulseSpeed( StepperControl & axis)
-{
-  time = micros();
-  handleOverflow( axis );
-  bool endStop = false;
-  if( (axis.dir > 0 && axis.pos >= axis.upperBound) || ((axis.dir < 0 && axis.pos <= axis.lowerBound))  )
-  {
-      endStop = true;
-  }
-  
-  if( endStop == false && axis.halfpulse !=0 && axis.nextpulsetime < time && axis.hasPulsed == false )
-  {
-    digitalWrite( axis.STEP_PIN, 1 );
-    axis.hasPulsed = true;
-    axis.pos=axis.pos+axis.dir;
-    axis.lastpulsetime = time;
-    //Serial.println( "pos");
-    //Serial.println(axis.pos);
-  }
-  else if( time > axis.lastpulsetime + axis.halfpulse )
-  {
-    digitalWrite( axis.STEP_PIN, 0 );
-    axis.nextpulsetime = axis.lastpulsetime + 2*axis.halfpulse;
-    axis.hasPulsed=false;
-  }
-  axis.prevtime =time;//Correcting a freeze bug sometimes after 70 minutes
-}
 
 
 char intBuffer[15];
@@ -154,46 +141,58 @@ void ProcessSerial()
     intBuffer[curl]=0;
     if( curl > 2 )
     { 
-      StepperControl *axis = NULL;
+      StepperExtras *axis = NULL;
+      AccelStepper * stepper = NULL;
       if( intBuffer[0] == 'x' )
       {
         axis=&XAxis;
+        stepper= &XAxis2;
       }
       else if( intBuffer[0] == 'y' )
       {
         axis=&YAxis;
+        stepper=&YAxis2;
       }
       if( axis !=NULL)
       {
-        int i = atoi(&(intBuffer[2]) );
+        
         if( intBuffer[1] =='s')
         {
-          axis->halfpulse = abs( i );
-          if( i > 0 )
-          {
-            axis->dir=1;
-            digitalWrite( axis->DIR_PIN, 1);
-          }
-          else
-          {
-            axis->dir=-1;
-            digitalWrite( axis->DIR_PIN, 0);
-          }
+          float f = atof(&(intBuffer[2]) );
+          stepper->setSpeed((float)f);
+          axis->speedMode=true;
+          Serial.println(f);
+        }
+        else if( intBuffer[1] =='a')
+        {
+          int i = atoi(&(intBuffer[2]) );
+          stepper->moveTo(i);
+          axis->speedMode=false;
+          Serial.println(i);
+        }
+        else if( intBuffer[1] =='r')
+        {
+          int i = atoi(&(intBuffer[2]) );
+          stepper->move(i);
+          axis->speedMode=false;
+          Serial.println(i);
         }
         else if( intBuffer[1] =='l')
         {
+          int i = atoi(&(intBuffer[2]) );
           axis->lowerBound = i;
+          Serial.println(i);
         }
         else if( intBuffer[1] =='u')
         {
+          int i = atoi(&(intBuffer[2]) );
           axis->upperBound = i;
+          Serial.println(i);
         }
         else if( intBuffer[1] =='h')
         {
-          axis->pos = i;
+           stepper->setCurrentPosition(0);
         }
-        
-        Serial.println(i);
         
       }
     }
@@ -204,23 +203,10 @@ void ProcessSerial()
   
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  //digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  //delay(3000);                       // wait for a second
-  //digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  //delay(3000);    
+void loop() { 
   ProcessSerial();
-  pulseAtHalfpulseSpeed(XAxis);
-  pulseAtHalfpulseSpeed(YAxis);
+  pollWithEndStop(XAxis2, XAxis );
+  pollWithEndStop(YAxis2, YAxis );
   
-  
-  /*
-  delayMicroseconds(100);
-  digitalWrite( X_STEP_PIN, 1 );
-  digitalWrite( Y_STEP_PIN, 1 );
-  delayMicroseconds(100);
-  digitalWrite( X_STEP_PIN, 0 );
-  digitalWrite( Y_STEP_PIN, 0 );
-  */
+
 }

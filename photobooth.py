@@ -24,7 +24,7 @@ ang = 0
 ratio = 1.0
 useDummySerial = False
 serialPort = "/dev/ttyUSB0"
-halfpulsemult = 40000.0
+speedmult = 20.0
 
 allTakenPictures = []
 cttoid = {}
@@ -141,7 +141,7 @@ class dummySerial():
 def getSerial():
     if useDummySerial is True :
         return dummySerial()
-    return serial.Serial('/dev/ttyUSB0',115200,timeout=1)
+    return serial.Serial(serialPort,115200,timeout=1)
 
 def gamepadLoop():
     global controllerPlugged
@@ -658,8 +658,8 @@ def processEvents(frame ,currenttime,ser):
             selectArtPicture( pictureIndex,artIndex)
         elif isinstance(ev,tuple) and ev[0] == "axis0":
             val = ev[1]
-            if abs(val) > 10:
-                val = int(1.0 / val * halfpulsemult)
+            if abs(val) > 15:
+                val = (val * speedmult)
             else:
                 val = 0
             # print("computed halfpulse :" +str(val))
@@ -669,8 +669,8 @@ def processEvents(frame ,currenttime,ser):
 
         elif isinstance(ev,tuple) and ev[0] == "axis3":
             val = ev[1]
-            if abs(val) > 10:
-                val = int(1.0 / val * halfpulsemult)
+            if abs(val) > 15:
+                val = ( val * speedmult)
             else:
                 val = 0
             # print("computed halfpulse :" +str(val))
@@ -817,12 +817,12 @@ with getSerial() as ser:
                 for (ex, ey, ew, eh) in eyes:
                     cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
                 if True:
-                    target=np.array( [small.shape[0]/4.0,small.shape[1]/2.0]) 
+                    target=np.array( [small.shape[0]/4.0,small.shape[1]/2.0])
                     center = [y+h/2,x+w/2]
                     diff = center - target
                     print(diff)
                     gamepadevents.put(("axis0", 0.5*diff[0]))
-                    gamepadevents.put(("axis3", 0.5*diff[1]))
+                    gamepadevents.put(("axis3", -0.5*diff[1]))
                 else:
                     gamepadevents.put(("axis0", 0.0))
                     gamepadevents.put(("axis3", 0.0))
