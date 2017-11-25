@@ -35,6 +35,7 @@ If you enable manual auto exposure using v4l2-ctl -d /dev/video0 -c exposure_aut
 
 [![Demo in video](https://img.youtube.com/vi/Dvh4kFYVPd0/0.jpg)](https://www.youtube.com/watch?v=Dvh4kFYVPd0)
 [![Update with GT2 pulley](https://img.youtube.com/vi/oYx7XjZQiro/0.jpg)](https://www.youtube.com/watch?v=oYx7XjZQiro)
+[![Advanced human tracking](https://img.youtube.com/vi/4UNtOUySp14/0.jpg)](https://www.youtube.com/watch?v=4UNtOUySp14)
 
 
 # Hardware : 
