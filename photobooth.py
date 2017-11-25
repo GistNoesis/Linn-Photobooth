@@ -20,9 +20,15 @@ import glob
 import os
 import re
 
+import CMT
+import PID
+import pose
+import gc
+import json
+
 ang = 0
 ratio = 1.0
-useDummySerial = False
+useDummySerial = True
 serialPort = "/dev/ttyUSB0"
 speedmult = 20.0
 
@@ -73,7 +79,7 @@ def artnameFromTime( ct ,style):
     return "pic" + str(ang) +"_"+ ct.strftime(datetimeformat)+ "@" + style + ".jpg"
 
 def artPath(ct,style):
-    return "art/pic" + str(ang) +"_"+ ct.strftime(datetimeformat) + "@" + style + ".jpg"
+    return "persistent/art/pic" + str(ang) +"_"+ ct.strftime(datetimeformat) + "@" + style + ".jpg"
 
 
 def parseTimeFromString( s ):
@@ -121,8 +127,8 @@ def initEnqueueStyles( folder):
                 artQueue.put( (-unix_time_millis(ct),i, ct,folder,styles[i][0]))
 
 
-loadPreviousPictures("photos")
-initEnqueueStyles("art")
+loadPreviousPictures("persistent/photos")
+initEnqueueStyles("persistent/art")
 pictureIndex = max(len(allTakenPictures)-1,0)
 
 
@@ -132,6 +138,9 @@ class dummySerial():
         return
     def __init__(self):
         self.x=0
+
+    def inWaiting(self):
+        return 0
 
     def __enter__(self):
         return self
@@ -153,10 +162,10 @@ def gamepadLoop():
             devices = [evdev.InputDevice(fn) for fn in evdev.list_devices()]
             for device in devices:
                 print(device.name)
-                # if device.name == 'PLAYSTATION(R)3 Controller':
-                ps3dev = device.fn
-                controllerPlugged = True
-                print("found")
+                if  device.name.startswith('PLAYSTATION(R)3 Controller') :
+                    ps3dev = device.fn
+                    controllerPlugged = True
+                    print("found")
 
             gamepad = evdev.InputDevice(ps3dev)
             for event in gamepad.read_loop():
@@ -270,6 +279,7 @@ def gamepadLoop():
         except FileNotFoundError:
             controllerPlugged = False
         except :
+            controllerPlugged = False
             print("Caught it")
             print("Unexpected error:", sys.exc_info()[0])
             time.sleep(1)
@@ -419,7 +429,7 @@ def TakePicture( frame, currenttime, folder ):
 
 
 def TakeExtraFrame( frame,currenttime ):
-    framesToSave.put( (frame,currenttime, "extraframes") )
+    framesToSave.put( (frame,currenttime, "persistent/extraframes") )
 
 picture = None
 smallRotPicture = None
@@ -504,9 +514,9 @@ def displayArt( img ):
 
 def printPhotoJob(pictureIndex):
     print("Print photo")
-    filename = pathFromTimeAndFolder( allTakenPictures[pictureIndex][0] ,"photos")
+    filename = pathFromTimeAndFolder( allTakenPictures[pictureIndex][0] ,"persistent/photos")
     print(subprocess.call(["lp", "-o", "media", filename]))
-    with open("printedPhotos.txt", "a+") as myfile:
+    with open("persistent/printedPhotos.txt", "a+") as myfile:
         myfile.write(filename + "\n")
 
 
@@ -514,7 +524,7 @@ def printArtJob(pictureIndex,artindex):
     print("Print art")
     filename = artPath(allTakenPictures[pictureIndex][0], styles[artindex][0])
     print(subprocess.call(["lp", "-o", "media", filename]))
-    with open("printedPhotos.txt", "a+") as myfile:
+    with open("persistent/printedPhotos.txt", "a+") as myfile:
         myfile.write(filename + "\n")
 
 
@@ -550,12 +560,13 @@ def moveCurrentPictureToDeletedFolder():
     global pictureIndex
     ct = allTakenPictures[pictureIndex][0]
     filename = filenameFromTime(ct)
-    print( subprocess.call( ["mv","photos/"+filename,"deleted/"+filename]))
+    print( subprocess.call( ["mv","persistent/photos/"+filename,"persistent/deleted/"+filename]))
     del allTakenPictures[pictureIndex]
     pictureIndex = min( pictureIndex,len(allTakenPictures)-1)
     selectDisplayedPhoto(pictureIndex)
     selectArtPicture(pictureIndex, artIndex)
 
+recording = False
 
 def processEvents(frame ,currenttime,ser):
     global background
@@ -618,7 +629,7 @@ def processEvents(frame ,currenttime,ser):
             confirmDelete = False
 
         if ev == "croix down":
-            TakePicture(frame,currenttime,"photos")
+            TakePicture(frame,currenttime,"persistent/photos")
             pictureIndex = len(allTakenPictures)-1
             displayPhoto( frame )
             selectArtPicture(pictureIndex,artIndex)
@@ -666,6 +677,18 @@ def processEvents(frame ,currenttime,ser):
             valw = "xs" + str(val) + '\n'
             print("axis0write :" + str(valw))
             ser.write(valw.encode('utf-8'))
+        elif isinstance(ev, tuple) and ev[0] == "axis0r":
+            val = ev[1]
+            # print("computed halfpulse :" +str(val))
+            valw = "xr" + str(int(val)) + '\n'
+            print("axis0write :" + str(valw))
+            ser.write(valw.encode('utf-8'))
+        elif isinstance(ev, tuple) and ev[0] == "axis0a":
+            val = ev[1]
+            # print("computed halfpulse :" +str(val))
+            valw = "xa" + str(int(val)) + '\n'
+            print("axis0write :" + str(valw))
+            ser.write(valw.encode('utf-8'))
 
         elif isinstance(ev,tuple) and ev[0] == "axis3":
             val = ev[1]
@@ -675,6 +698,18 @@ def processEvents(frame ,currenttime,ser):
                 val = 0
             # print("computed halfpulse :" +str(val))
             valw = "ys" + str(val) + '\n'
+            print("axis3write :" + str(valw))
+            ser.write(valw.encode('utf-8'))
+        elif isinstance(ev, tuple) and ev[0] == "axis3r":
+            val = ev[1]
+            # print("computed halfpulse :" +str(val))
+            valw = "yr" + str(int(val)) + '\n'
+            print("axis3write :" + str(valw))
+            ser.write(valw.encode('utf-8'))
+        elif isinstance(ev, tuple) and ev[0] == "axis3a":
+            val = ev[1]
+            # print("computed halfpulse :" +str(val))
+            valw = "ya" + str(int(val)) + '\n'
             print("axis3write :" + str(valw))
             ser.write(valw.encode('utf-8'))
 
@@ -692,14 +727,14 @@ def processEvents(frame ,currenttime,ser):
         dt = timer - datetime.now()
         if dt.total_seconds() < 0 :
             timer= None
-            TakePicture(frame,currenttime,"photos")
+            TakePicture(frame,currenttime,"persistent/photos")
             frameoflastpic = frameProcessed
             pictureIndex = len(allTakenPictures) - 1
             displayPhoto(frame)
             selectArtPicture(pictureIndex, artIndex)
             SavePastFrames(nbPastFrames)
 
-    if( frameProcessed > frameoflastpic and frameProcessed < frameoflastpic + nbFutureFrames) :
+    if( recording is True or (frameProcessed > frameoflastpic and frameProcessed < frameoflastpic + nbFutureFrames) )  :
         TakeExtraFrame(frame,currenttime)
 
 
@@ -743,12 +778,14 @@ cv2.namedWindow("frame");
 cv2.namedWindow("picture");
 cv2.namedWindow("art");
 cv2.namedWindow("doc");
+cv2.namedWindow("facetrack");
 #cv2.namedWindow("title");
 
 
 #title = cv2.imread("title.png")
 #cv2.imshow("title",title)
 ps3 = cv2.imread("ps3.jpg")
+
 
 
 
@@ -761,6 +798,7 @@ if( ang == 0 or ang == 180):
     cv2.moveWindow("picture", int(math.ceil(1920 * ratio)), 0)
     cv2.moveWindow("art", 0, int(math.ceil(1080*ratio)))
     cv2.moveWindow("doc",int(math.ceil(1920 * ratio)),int(math.ceil(1080*ratio)) )
+    cv2.moveWindow("facetrack", int(math.ceil(1920 * ratio)), int(math.ceil(1080 * ratio)))
     #cv2.moveWindow("title", 0, int(2*math.ceil(1080 * ratio)))
     #cv2.resizeWindow("title", 2*frameSize[0], 40)
     smallps3 = cv2.resize(ps3, (0, 0), fx=ratio, fy=ratio)
@@ -781,6 +819,8 @@ cv2.resizeWindow("picture",frameSize[0],frameSize[1])
 cv2.resizeWindow("art",frameSize[0],frameSize[1])
 cv2.resizeWindow("doc",frameSize[0],frameSize[1])
 
+cv2.resizeWindow("facetrack",frameSize[0],frameSize[1])
+
 last10Pictures.append( background )
 print(background.shape)
 
@@ -788,6 +828,189 @@ face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 
 faceTracking = False
+
+cmtInitialized = False
+
+CMT = CMT.CMT()
+
+framesToTrack = Queue()
+
+framesToDisplay = Queue()
+
+def queue_get_all(q,items = None):
+    if items is None:
+        items = []
+    while 1:
+        try:
+            items.append(q.get_nowait())
+        except :
+            break
+    return items
+
+def FaceTrackinThread():
+
+    global cmtInitialized
+    global faceTracking
+    global ratio
+    pidx = None
+    pidy = None
+
+    isLost=False
+    while( True) :
+
+        allItems = [framesToTrack.get()]
+
+        allItems = queue_get_all(framesToTrack,allItems)
+        (rot, ct,pos) = allItems[-1]
+        small = cv2.resize(rot, (0, 0), fx=ratio, fy=ratio)
+
+
+        if (faceTracking):
+            ftratio = 0.5
+            ftinp =  cv2.resize(rot, (0, 0), fx=ftratio, fy=ftratio)
+
+            gray = cv2.cvtColor(ftinp, cv2.COLOR_BGR2GRAY)
+            if (cmtInitialized is False):
+                faces = face_cascade.detectMultiScale(gray, 1.2, 5)
+
+                for (x, y, w, h) in faces:
+                    cv2.rectangle(small, (int(x * ftratio/ratio), int(y * ftratio/ratio)),
+                                  (int((x + w) * ftratio/ratio), int((y + h) * ftratio/ratio)), (255, 0, 0), 2)
+
+                    try:
+                        CMT.initialise(gray, (x, y), (x + w, y + h))
+                        cmtInitialized = True
+                        t = ct
+                        pidx = PID.PIDController(t, 5.0, 0.0, 1.0)
+                        pidy = PID.PIDController(t, 5.0, 0.0, 1.0)
+                        isLost=False
+                    except:
+                        print("CMT init error Caught")
+                        print("Unexpected error:", sys.exc_info()[0])
+                        pass
+                    break
+
+            if (cmtInitialized is True):
+                try:
+                    CMT.process_frame(gray)
+                    if CMT.has_result:
+                        target = np.array([small.shape[0] *ratio / ftratio / 4.0, small.shape[1] *ratio / ftratio / 2.0])
+
+                        cv2.rectangle(small, (int(CMT.tl[0] * ftratio/ratio), int(CMT.tl[1] * ftratio/ratio)),
+                                      (int(CMT.br[0] * ftratio/ratio), int(CMT.br[1] * ftratio/ratio)), (255, 0, 0), 2)
+                        center = [(CMT.tl[1] + CMT.br[1]) / 2, (CMT.tl[0] + CMT.br[0]) / 2]
+                        diff = (center - target) * ratio
+                        print(diff)
+                        sf = 10.0
+                        ry = - sf * diff[0]
+                        rx = - sf * diff[1]
+
+                        t = ct
+                        pidy.AppendPoint(t, -diff[0])
+                        pidx.AppendPoint(t, -diff[1])
+
+                        #We use here a relative movement strategy so we don't need the position reading from the steppers
+                        #Look at the deep learning case for an example of using absolute positionning
+                        if (np.sqrt(rx * rx + ry * ry) > 20 * sf):
+                            gamepadevents.put(("axis0r", pidy.output))
+                            gamepadevents.put(("axis3r", pidx.output))
+                        isLost=False
+                    else:
+                        isLost = True
+                except :
+                    print("CMT error Caught ")
+                    print("Unexpected error:", sys.exc_info()[0])
+        #cv2.imshow("facetrack",small)
+        framesToDisplay.put(("facetrack",small.copy() ))
+
+
+def FaceTrackinThreadDeepLearning():
+
+    global faceTracking
+    global ratio
+    global background
+    isLost=False
+    t = time.time()
+    pidx = PID.PIDController(t, 4.0, 0.0, 0.1)
+    pidy = PID.PIDController(t, 4.0, 0.0, 0.1)
+
+    context = pose.getContext()
+    socket = pose.getSocket(context)
+
+    while( True) :
+        if( recording ):
+            print("Currently recording")
+
+        allItems = [framesToTrack.get()]
+
+        allItems = queue_get_all(framesToTrack,allItems)
+        (rot, ct,pos) = allItems[-1]
+        small = cv2.resize(rot, (0, 0), fx=ratio, fy=ratio)
+
+
+        if (faceTracking):
+            ftratio = 1.0
+            ftinp =  cv2.resize(rot, (0, 0), fx=ftratio, fy=ftratio)
+
+
+            try:
+                poskp = pose.getPoseFromImage(socket, ftinp)
+                featureNum = 1
+                if len( poskp ) > 0 and poskp[0][1]["score"] > 0.3 :
+                    tl = (poskp[0][featureNum]["x"]*ratio/ftratio-10,poskp[0][featureNum]["y"]*ratio/ftratio-10)
+                    br = (poskp[0][featureNum]["x"]*ratio/ftratio + 10, poskp[0][featureNum]["y"] *ratio/ftratio + 10)
+                    print("topleft :")
+                    print(tl)
+                    print("bottomright :")
+                    print(br)
+                    target = np.array([small.shape[0] / 2.0, small.shape[1] / 2.0])
+
+                    cv2.rectangle(small, (int(tl[0] ), int(tl[1] )),
+                                  (int(br[0] ), int(br[1] )), (255, 0, 0), 2)
+
+
+                    center = [(tl[1] + br[1]) / 2, (tl[0] + br[0]) / 2]
+                    diff = (center - target)
+                    print( "diff : " + str(diff))
+                    #print(diff)
+                    sf = 10.0
+                    ry = - sf * diff[0]
+                    rx = - sf * diff[1]
+
+                    t = ct
+                    pidy.AppendPoint(t, -diff[0])
+                    pidx.AppendPoint(t, -diff[1])
+                    if pos is None:
+                        if (np.sqrt(rx * rx + ry * ry) > 20 * sf):
+                            gamepadevents.put(("axis0r", pidy.output))
+                            gamepadevents.put(("axis3r", pidx.output))
+                    else:
+                        if (np.sqrt(rx * rx + ry * ry) > 20 * sf):
+                            gamepadevents.put(("axis0a",pos[0] + pidy.output ))
+                            gamepadevents.put(("axis3a", pos[1] + pidx.output))
+
+                    isLost=False
+                else:
+                    isLost = True
+            except :
+                print("FaceTrackinThreadDeepLearning error Caught ")
+                print("Unexpected error:", sys.exc_info()[0])
+        #cv2.imshow("facetrack",small)
+        framesToDisplay.put(("facetrack",small.copy()))
+
+
+
+threadFaceTracking = Thread(target = FaceTrackinThread)
+threadFaceTracking.daemon = True
+threadFaceTracking.start()
+
+
+
+lastSrqReadIndex =0
+
+psrq =[]
+
+
 
 with getSerial() as ser:
     while(True):
@@ -799,39 +1022,63 @@ with getSerial() as ser:
         # Display the resulting frame
         #fgmask = fgbg.apply(frame)
 
+        #if ret is False :
+        #    time.sleep(0.001)
+        #    continue
 
+
+        srq = Queue()
+
+        if (ser.inWaiting() > 0):  # if incoming bytes are waiting to be read from the serial input buffer
+            #data_str = ser.read(ser.inWaiting()).decode('ascii')  # read the bytes and convert from binary array to ASCII
+            data_str = ser.read(ser.inWaiting())
+            characters = list(data_str)
+            for i in characters:
+                srq.put(i)
+            #print(data_str, end='')
+            print(srq.qsize())
+        ev = []
+        delim = ord('\n')
+        partial = []
+        while 1:
+            try:
+                c = srq.get_nowait()
+                if( c == delim):
+                    psrq.extend(partial)
+                    ev.append( list(psrq) )
+                    psrq.clear()
+                    partial.clear()
+                else:
+                    partial.append(c)
+            except:
+                psrq.extend(partial)
+                break
+
+        currentPosition = None
+        #print("len(ev) : "+ str(len(ev)))
+        parsedEvts = []
+        for event in ev :
+            eventstr = ''.join([chr(c) for c in event])
+            try:
+                obj= json.loads(eventstr)
+                parsedEvts.append(obj)
+            except:
+                print("json error Caught ")
+                print("Unexpected error:", sys.exc_info()[0])
+
+        for i in range(len(parsedEvts)-1,-1,-1):
+            e = parsedEvts[i]
+            #print(e)
+            if "pos" in e:
+                currentPosition = e["pos"]
+                break
 
 
         rot = rotate_image_90(frame,ang)
         small = cv2.resize(rot, (0, 0), fx=ratio, fy=ratio)
+        #print("current position : " + str(currentPosition))
 
-        if( faceTracking ):
-            gray = cv2.cvtColor(small, cv2.COLOR_BGR2GRAY)
-            faces = face_cascade.detectMultiScale(gray,1.2,5)
-
-            for (x, y, w, h) in faces:
-                cv2.rectangle(small, (x, y), (x + w, y + h), (255, 0, 0), 2)
-                roi_gray = gray[y:y + h, x:x + w]
-                roi_color = small[y:y + h, x:x + w]
-                eyes = eye_cascade.detectMultiScale(roi_gray,1.1,7)
-                for (ex, ey, ew, eh) in eyes:
-                    cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
-                if True:
-                    target=np.array( [small.shape[0]/4.0,small.shape[1]/2.0])
-                    center = [y+h/2,x+w/2]
-                    diff = center - target
-                    print(diff)
-                    gamepadevents.put(("axis0", 0.5*diff[0]))
-                    gamepadevents.put(("axis3", -0.5*diff[1]))
-                else:
-                    gamepadevents.put(("axis0", 0.0))
-                    gamepadevents.put(("axis3", 0.0))
-                break
-
-            if( len(faces) == 0):
-                gamepadevents.put(("axis0", 0.0))
-                gamepadevents.put(("axis3", 0.0))
-
+        framesToTrack.put((rot.copy(),time.time(),currentPosition))
 
 
 
@@ -852,6 +1099,19 @@ with getSerial() as ser:
 
         cv2.imshow('frame', small)
 
+        frames=queue_get_all(framesToDisplay)
+
+        #for (name,img) in frames:
+        #cv2.imshow(frames[-1][0],frames[-1][1])
+        renderednames = set()
+        #only display most recent
+
+        for i in range( len(frames)-1,-1,-1 ):
+            (name,img) = frames[i]
+            if( name not in renderednames ):
+                renderednames.add(name)
+                cv2.imshow(name, img)
+
 
         processEvents(rot, datetime.now(),ser)
 
@@ -860,11 +1120,38 @@ with getSerial() as ser:
             break
         if key & 0xFF == ord(' '):
             gamepadevents.put("croix down")
+        if key > 0:
+            print(key)
+        if key == 83:
+            gamepadevents.put( ("axis3",40))
+            gamepadevents.put(("axis0", 0))
+        if key == 81:
+            gamepadevents.put( ("axis3",-40))
+            gamepadevents.put(("axis0", 0))
+        if key == 82:
+            gamepadevents.put( ("axis0",40))
+            gamepadevents.put(("axis3", 0))
+        if key == 84:
+            gamepadevents.put( ("axis0",-40))
+            gamepadevents.put(("axis3", 0))
+        if key == 226:
+            gamepadevents.put( ("axis0",0) )
+            gamepadevents.put( ("axis3",0))
+
+        if key & 0xFF == ord('r'):
+            #recording = not recording
+            print("Recording : " + str(recording))
+
         if key & 0xFF == ord('f'):
             faceTracking = not faceTracking
+            cmtInitialized = False
             if faceTracking == False:
                 gamepadevents.put(("axis0", 0.0))
                 gamepadevents.put(("axis3", 0.0))
+
+
+
+
 
 
 
