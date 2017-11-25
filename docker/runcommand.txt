@@ -1,0 +1,1 @@
+docker run --privileged  --cap-add=ALL --net=host --device=/dev/video0:/dev/video0 -v /lib/modules:/lib/modules -v /var/run/dbus:/var/run/dbus -v ABSOLUTE_PATH_TO_HOST_LINN-PHOTOBOOTH_PERSISTENT_FOLDER:/root/Linn-Photobooth/persistent -p5900:5900 -p6080:80 -e VNC_PASSWORD=mypassword linn-photobooth

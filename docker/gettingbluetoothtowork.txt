@@ -1,0 +1,12 @@
+start container
+
+on host :
+connect usb 
+sixpair
+sixad -s
+(press play button)
+(Ctrl-c to stop sixad)
+
+then in container :
+sixad -s
+press play button
