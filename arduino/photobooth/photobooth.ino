@@ -21,12 +21,12 @@ const int Z_DIR_PIN          = 48;
 const int Z_ENABLE_PIN       = 62;  // Active LOW
 
 #include <AccelStepper.h>
-
+#include <stdio.h> // for function sprintf
 
 AccelStepper XAxis2( AccelStepper::MotorInterfaceType::DRIVER,X_STEP_PIN,X_DIR_PIN );
 AccelStepper YAxis2( AccelStepper::MotorInterfaceType::DRIVER,Y_STEP_PIN,Y_DIR_PIN );
 
-StepperExtras XAxis = {X_ENABLE_PIN,-1700,1700,true};
+StepperExtras XAxis = {X_ENABLE_PIN,-2700,2700,true};
 StepperExtras YAxis = {Y_ENABLE_PIN,-3700,3700,true};
 
 void setup() {
@@ -51,8 +51,8 @@ void setup() {
   digitalWrite( X_DIR_PIN, 1);
   digitalWrite( Y_DIR_PIN, 0 );
 
-  XAxis2.setAcceleration(1000.0);
-  YAxis2.setAcceleration(1000.0);
+  XAxis2.setAcceleration(10000.0);
+  YAxis2.setAcceleration(10000.0);
   
   XAxis2.setMaxSpeed(20000);
   YAxis2.setMaxSpeed(20000);
@@ -161,33 +161,58 @@ void ProcessSerial()
           float f = atof(&(intBuffer[2]) );
           stepper->setSpeed((float)f);
           axis->speedMode=true;
-          Serial.println(f);
+          Serial.print( "{\"");
+          Serial.print( intBuffer[0] );
+          Serial.print( intBuffer[1] );
+          Serial.print( "\":");
+          Serial.print(f);
+          Serial.println( "}");
         }
         else if( intBuffer[1] =='a')
         {
           int i = atoi(&(intBuffer[2]) );
           stepper->moveTo(i);
           axis->speedMode=false;
-          Serial.println(i);
+          Serial.print( "{\"");
+          Serial.print( intBuffer[0] );
+          Serial.print( intBuffer[1] );
+          Serial.print( "\":");
+          Serial.print(i);
+          Serial.println( "}");
         }
         else if( intBuffer[1] =='r')
         {
           int i = atoi(&(intBuffer[2]) );
           stepper->move(i);
           axis->speedMode=false;
-          Serial.println(i);
+          Serial.print( "{\"");
+          Serial.print( intBuffer[0] );
+          Serial.print( intBuffer[1] );
+          Serial.print( "\":");
+          Serial.print(i);
+          Serial.println( "}");
         }
         else if( intBuffer[1] =='l')
         {
           int i = atoi(&(intBuffer[2]) );
           axis->lowerBound = i;
-          Serial.println(i);
+          Serial.print( "{\"");
+          Serial.print( intBuffer[0] );
+          Serial.print( intBuffer[1] );
+          Serial.print( "\":");
+          Serial.print(i);
+          Serial.println( "}");
         }
         else if( intBuffer[1] =='u')
         {
           int i = atoi(&(intBuffer[2]) );
           axis->upperBound = i;
-          Serial.println(i);
+          Serial.print( "{\"");
+          Serial.print( intBuffer[0] );
+          Serial.print( intBuffer[1] );
+          Serial.print( "\":");
+          Serial.print(i);
+          Serial.println( "}");
         }
         else if( intBuffer[1] =='h')
         {
@@ -203,8 +228,28 @@ void ProcessSerial()
   
 }
 
+int loco = 0;
+
+void PrintSerial()
+{
+  Serial.print("{\"pos\":[");
+  Serial.print( XAxis2.currentPosition() );
+  Serial.print(",");
+  Serial.print( YAxis2.currentPosition() );
+  Serial.println("]}");
+}
+
 void loop() { 
   ProcessSerial();
+  loco++;
+  if( loco == 100)
+  {
+    PrintSerial();
+    loco = 0;
+  }
+
+  
+  
   pollWithEndStop(XAxis2, XAxis );
   pollWithEndStop(YAxis2, YAxis );
   
