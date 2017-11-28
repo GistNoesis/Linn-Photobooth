@@ -72,11 +72,12 @@ close up of one axis of the diy gimbal yet another angle
 connecting the green wire to the black wire to enable the power supply
 
 # Software : 
-(I'll add a guide soon to help build the software stack, I'm not sure to be able to build some docker images because of the bluetooth driver, but for the remote art I'll probably do it)
+You can install it by docker (see docker folder
+(I'll add a guide soon to help build the software stack or follow the dockerfile, but for the remote art I'll probably do it)
 
 - Lubuntu 16.04 (for its ability to Undecorate windows)
 - OpenCV (You need to install from source so you can properly show images : I've followed https://medium.com/@debugvn/installing-opencv-3-3-0-on-ubuntu-16-04-lts-7db376f93961 install with python3 support )
-- Python3 ( I've used a virtualenv as you probably should, I've not yet listed the dependencies in requirements.txt (damn OpenCv) : numpy pyserial evdev )
+- Python3 ( I've used a virtualenv as you probably should, I've not yet listed the dependencies in requirements.txt (damn OpenCv) : numpy pyserial evdev zmq)
 - Sixad (driver for bluetooth ps3 controller installed from source)
 - Arduino IDE (You need to add your current user to the dialout group to resolve serial permission issues) (Load the ino project, Install AccelStepper Library using "Sketch->Include Library->Manage Library Select board Mega 2560 and serial /dev/ttyUSB0 and then upload)
 - Fast-Neural-style (https://github.com/jcjohnson/fast-neural-style) (Remember to update torch : see https://github.com/jcjohnson/fast-neural-style/issues/137 ) (Called by remoteart.sh replace "beast" in script by username@yourartserverip and make sure you can ssh without password to this machine before using ssh-copy-id)
