@@ -33,8 +33,16 @@ They can also use L1/R1 to see previous/next pictures.
 They can also use the analogic joystick to move the camera.
 If you enable manual auto exposure using v4l2-ctl -d /dev/video0 -c exposure_auto=1 then the up and down arrows will adjust exposure time. (Remember you can also adjust Gain using v4l2-ctl to play on ISO sensitivity)
 
+Prototype Demo :
+
 [![Demo in video](https://img.youtube.com/vi/Dvh4kFYVPd0/0.jpg)](https://www.youtube.com/watch?v=Dvh4kFYVPd0)
+
+Update with GT2 pulley :
+
 [![Update with GT2 pulley](https://img.youtube.com/vi/oYx7XjZQiro/0.jpg)](https://www.youtube.com/watch?v=oYx7XjZQiro)
+
+Advanced human tracking :
+
 [![Advanced human tracking](https://img.youtube.com/vi/4UNtOUySp14/0.jpg)](https://www.youtube.com/watch?v=4UNtOUySp14)
 
 
